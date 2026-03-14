@@ -3,7 +3,7 @@ FROM golang:1.21-alpine AS builder
 WORKDIR /app
 
 # Copy all go modules config
-COPY go.work go.work.sum ./
+COPY go.work ./
 COPY apps/ apps/
 COPY packages/ packages/
 COPY services/ services/
@@ -15,7 +15,5 @@ RUN cd ${SERVICE_PATH} && go build -o /bin/service main.go handlers.go engine.go
 FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /bin/service /app/service
-# Copy config if any
-COPY .env .env
 
 CMD ["/app/service"]
