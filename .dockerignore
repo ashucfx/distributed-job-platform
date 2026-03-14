@@ -1,11 +1,11 @@
 .git
 .gitignore
 .next_cache
-node_modules
-.next
-out
-build
-dist
+**/node_modules
+**/.next
+**/out
+**/build
+**/dist
 *.exe
 *.dll
 *.so
