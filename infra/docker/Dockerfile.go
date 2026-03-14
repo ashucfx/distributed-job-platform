@@ -10,7 +10,7 @@ COPY services/ services/
 
 # Build the specified service
 ARG SERVICE_PATH
-RUN cd ${SERVICE_PATH} && go build -o /bin/service main.go handlers.go engine.go || cd ${SERVICE_PATH} && go build -o /bin/service *.go
+RUN cd ${SERVICE_PATH} && go build -o /bin/service .
 
 FROM alpine:latest
 WORKDIR /app
