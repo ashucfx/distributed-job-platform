@@ -1,0 +1,5 @@
+module github.com/ashucfx/distributed-job-platform/packages/logger
+
+go 1.21
+
+require go.uber.org/zap v1.26.0

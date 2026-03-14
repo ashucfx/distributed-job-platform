@@ -1,0 +1,11 @@
+go 1.21
+
+use (
+	./apps/api
+	./packages/config
+	./packages/database
+	./packages/logger
+	./packages/queue
+	./services/scheduler
+	./services/worker
+)
