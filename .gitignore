@@ -1,0 +1,38 @@
+# Go
+bin/
+obj/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Node
+node_modules/
+.next/
+out/
+build/
+dist/
+.env*.local
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Data
+data/
+*.rdb
+postgres-data/
+redis-data/
+grafana-data/
+prometheus-data/
