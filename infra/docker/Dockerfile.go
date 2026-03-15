@@ -10,6 +10,7 @@ COPY services/ services/
 
 # Build the specified service
 ARG SERVICE_PATH
+RUN ls -laR .
 RUN cd ${SERVICE_PATH} && go build -o /bin/service .
 
 FROM alpine:latest

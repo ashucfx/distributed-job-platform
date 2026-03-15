@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/ashucfx/distributed-job-platform/apps/api"
 	"github.com/ashucfx/distributed-job-platform/packages/config"
 	"github.com/ashucfx/distributed-job-platform/packages/database"
 	"github.com/ashucfx/distributed-job-platform/packages/logger"
@@ -25,8 +24,8 @@ func main() {
 	dbService := database.NewGormDBService(dbConn)
 	queueService := queue.NewRedisQueue(cfg.RedisUrl)
 
-	jobController := api.NewJobController(dbService, queueService)
-	router := api.SetupRouter(jobController)
+	jobController := NewJobController(dbService, queueService)
+	router := SetupRouter(jobController)
 
 	log.Printf("Starting API server on port %s", cfg.Port)
 	if err := router.Run(":" + cfg.Port); err != nil {

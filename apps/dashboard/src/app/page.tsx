@@ -60,7 +60,7 @@ export default function Home() {
             <p className="text-gray-500 mt-2">Real-time job queue monitoring and submission</p>
           </div>
           <div className="flex gap-4">
-            <a href="http://localhost:3000/d/job-metrics" target="_blank" className="bg-orange-500 text-white px-4 py-2 rounded shadow hover:bg-orange-600 transition">View Grafana</a>
+            <a href="http://localhost:3002/d/job-metrics" target="_blank" className="bg-orange-500 text-white px-4 py-2 rounded shadow hover:bg-orange-600 transition">View Grafana</a>
           </div>
         </header>
 
