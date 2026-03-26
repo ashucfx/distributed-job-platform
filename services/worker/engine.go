@@ -119,18 +119,17 @@ func (e *Engine) handleFailure(ctx context.Context, dbJobID string, job *queue.J
 	if dbJob.Retries < dbJob.MaxRetries {
 		_ = e.db.IncrementRetries(dbJobID)
 		
-		// Exponential backoff logic
+		// In a production system, we'd use a dedicated delayed queue or a scheduler.
+		// For this platform, we re-enqueue with a backoff.
 		backoffDuration := time.Duration(1<<dbJob.Retries) * time.Minute
-		_ = e.db.CreateJobLog(dbJobID, fmt.Sprintf("Retrying job in %v", backoffDuration), "info")
+		_ = e.db.CreateJobLog(dbJobID, fmt.Sprintf("Retrying job in %v (Retry %d/%d)", backoffDuration, dbJob.Retries+1, dbJob.MaxRetries), "info")
 		
-		// In a real system, you'd enqueue to a delayed queue (e.g. Redis sorted sets).
-		// For simplicity we schedule a goroutine to wait then re-enqueue
+		_ = e.db.UpdateJobStatus(dbJobID, database.StatusPending, errMsg)
+
 		go func() {
 			time.Sleep(backoffDuration)
 			_ = e.q.Enqueue(context.Background(), *job)
 		}()
-		
-		_ = e.db.UpdateJobStatus(dbJobID, database.StatusPending, errMsg)
 	} else {
 		// DLQ
 		_ = e.db.CreateJobLog(dbJobID, "Max retries reached. Moving to DLQ.", "error")
