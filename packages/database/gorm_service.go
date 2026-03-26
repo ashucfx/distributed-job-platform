@@ -20,6 +20,12 @@ func (s *GormDBService) GetJobByID(id string) (*Job, error) {
 	return &job, err
 }
 
+func (s *GormDBService) ListJobs(limit int) ([]Job, error) {
+	var jobs []Job
+	err := s.db.Order("created_at desc").Limit(limit).Find(&jobs).Error
+	return jobs, err
+}
+
 func (s *GormDBService) UpdateJobStatus(id string, status JobStatus, errStr string) error {
 	return s.db.Model(&Job{}).Where("id = ?", id).Updates(map[string]interface{}{
 		"status":     status,

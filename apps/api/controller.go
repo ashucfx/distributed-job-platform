@@ -74,3 +74,12 @@ func (c *JobController) GetJob(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, job)
 }
+
+func (c *JobController) ListJobs(ctx *gin.Context) {
+	jobs, err := c.db.ListJobs(20)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "failed to list jobs"})
+		return
+	}
+	ctx.JSON(http.StatusOK, jobs)
+}
